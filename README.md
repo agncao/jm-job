@@ -63,3 +63,34 @@ com.jm.job.client.JmJobExecutor.TaskLoader
 com.jm.job.client.JmJobExecutor.Worker
 ```
 
+# 数据库设计
+
+1、Group，分组基本信息
+
+| 字段 | 字段注释 | 字段类型 | 备注   |
+| ---- | -------- | -------- | ------ |
+| id   | 关键字   | bigint   | 自增长 |
+| name | 组名     | varchar  |        |
+
+2、Node，节点基本信息
+
+| 字段    | 字段注释     | 字段类型 | 备注            |
+| ------- | ------------ | -------- | --------------- |
+| id      | 关键字       | bigint   | 自增长          |
+| ip      | 节点ip地址   | varchar  | not null        |
+| port    | 节点端口号   | varchar  |                 |
+| disable | 节点是否禁用 | int      | 0否1是,not null |
+| groupId | 所属分组     | bigint   |                 |
+
+3、Task，节点基本信息
+
+| 字段     | 关键字   | 字段类型 | 备注                                 |
+| -------- | -------- | -------- | ------------------------------------ |
+| id       | 关键字   | bigint   | 自增长                               |
+| name     | 任务名   | varchar  | not null                             |
+| beanName | bean的名 | varchar  | not null                             |
+| status   | 状态     | int      | 0未开始1待执行2执行中3异常, not null |
+| disable  | 是否禁用 | int      | 0否1是,not null                      |
+| retry    | 是否重试 | int      | 0否1是,not null                      |
+| groupId  | 所属分组 | bigint   |                                      |
+
