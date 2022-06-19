@@ -8,6 +8,43 @@ jm-job是一个分布式任务执行器，分为管理端Master和执行节点No
 
 注：因受限于环境与时间，未能完全调试代码。代码只能作为设计参考，但以足够丰富完整。
 
+# 持久层设计
+## 优化设计
+持久层采用mysql存储任务调度所需的基本信息，包括分组、节点、任务等基本信息。当分布式达到一定规模，可对数据访问进行优化设计，由于此场景是写入少、查询多，故优化可遵照如下思路：
+1、各个节点从数据库查询要执行的任务信息，管理端写入任务相关数据，所以查询多写入少，数据库存储采用读写分离。
+2、对从数据库查询到等待执行任务可放入redis缓存中。当管理端变更任务数据时，可同步缓存中的待执行的任务。
+
+## 数据库设计
+1、Group，分组基本信息
+
+| 字段 | 字段注释 | 字段类型 | 备注         |
+| ---- | -------- | -------- | ------------ |
+| id   | 关键字   | bigint   | 自增长       |
+| name | 组名     | varchar  |              |
+
+2、Node，节点基本信息
+
+| 字段    | 字段注释     | 字段类型 | 备注            |
+| ------- | ------------ | -------- | --------------- |
+| id      | 关键字       | bigint   | 自增长          |
+| ip      | 节点ip地址   | varchar  | not null        |
+| port    | 节点端口号   | varchar  |                 |
+| disable | 节点是否禁用 | int      | 0否1是,not null |
+| groupId | 所属分组     | bigint   |                 |
+
+3、Task，节点基本信息
+
+| 字段     | 关键字   | 字段类型 | 备注                                 |
+| -------- | -------- | -------- | ------------------------------------ |
+| id       | 关键字   | bigint   | 自增长                               |
+| name     | 任务名   | varchar  | not null                             |
+| beanName | bean的名 | varchar  | not null                             |
+| status   | 状态     | int      | 0未开始1待执行2执行中3异常, not null |
+| disable  | 是否禁用 | int      | 0否1是,not null                      |
+| retry    | 是否重试 | int      | 0否1是,not null                      |
+| groupId  | 所属分组 | bigint   |                                      |
+
+
 # 管理端Master
 
 com.jm.job.manage.web.TaskController
@@ -62,37 +99,3 @@ com.jm.job.client.JmJobExecutor.TaskLoader
 ```
 com.jm.job.client.JmJobExecutor.Worker
 ```
-
-# 数据库设计
-
-1、Group，分组基本信息
-
-1、Group，分组基本信息
-
-| 字段 | 字段注释 | 字段类型 | 备注         |
-| ---- | -------- | -------- | ------------ |
-| id   | 关键字   | bigint   | 自增长       |
-| name | 组名     | varchar  |              |
-
-2、Node，节点基本信息
-
-| 字段    | 字段注释     | 字段类型 | 备注            |
-| ------- | ------------ | -------- | --------------- |
-| id      | 关键字       | bigint   | 自增长          |
-| ip      | 节点ip地址   | varchar  | not null        |
-| port    | 节点端口号   | varchar  |                 |
-| disable | 节点是否禁用 | int      | 0否1是,not null |
-| groupId | 所属分组     | bigint   |                 |
-
-3、Task，节点基本信息
-
-| 字段     | 关键字   | 字段类型 | 备注                                 |
-| -------- | -------- | -------- | ------------------------------------ |
-| id       | 关键字   | bigint   | 自增长                               |
-| name     | 任务名   | varchar  | not null                             |
-| beanName | bean的名 | varchar  | not null                             |
-| status   | 状态     | int      | 0未开始1待执行2执行中3异常, not null |
-| disable  | 是否禁用 | int      | 0否1是,not null                      |
-| retry    | 是否重试 | int      | 0否1是,not null                      |
-| groupId  | 所属分组 | bigint   |                                      |
-
