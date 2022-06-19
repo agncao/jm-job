@@ -44,12 +44,8 @@ com.jm.job.manage.web.TaskController
 
 对任务的管理粒度
 
-```
 1、以组作为最小管理单元
 2、一个组可以有多个任务，一个组可以对应多个节点。表示同一个组的任务在多个节点运行
-
-![jm-job类图](https://github.com/agncao/jm-job/blob/master/jm-job%20%E7%B1%BB%E5%9B%BE.png)
-```
 ![jm-job类图](https://github.com/agncao/jm-job/blob/master/jm-job%20%E7%B1%BB%E5%9B%BE.png)
 
 
