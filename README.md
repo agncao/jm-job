@@ -50,7 +50,7 @@ com.jm.job.manage.web.TaskController
 
 ![jm-job类图](https://github.com/agncao/jm-job/blob/master/jm-job%20%E7%B1%BB%E5%9B%BE.png)
 ```
-
+![jm-job类图](https://github.com/agncao/jm-job/blob/master/jm-job%20%E7%B1%BB%E5%9B%BE.png)
 
 
 # 执行端Node
