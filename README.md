@@ -67,10 +67,12 @@ com.jm.job.client.JmJobExecutor.Worker
 
 1、Group，分组基本信息
 
-| 字段 | 字段注释 | 字段类型 | 备注   |
-| ---- | -------- | -------- | ------ |
-| id   | 关键字   | bigint   | 自增长 |
-| name | 组名     | varchar  |        |
+1、Group，分组基本信息
+
+| 字段 | 字段注释 | 字段类型 | 备注         |
+| ---- | -------- | -------- | ------------ |
+| id   | 关键字   | bigint   | 自增长       |
+| name | 组名     | varchar  |              |
 
 2、Node，节点基本信息
 
