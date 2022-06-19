@@ -4,7 +4,7 @@ jm-job是一个分布式任务执行器，分为管理端Master和执行节点No
 
 整体架构如下图所示
 
-![jm-job架构](/Users/caojm/jd/离职和简历/review/jm-job架构.png)
+![jm-job架构](https://github.com/agncao/jm-job/blob/master/jm-job%E6%9E%B6%E6%9E%84.png)
 
 注：因受限于环境与时间，未能完全调试代码。代码只能作为设计参考，但以足够丰富完整。
 
